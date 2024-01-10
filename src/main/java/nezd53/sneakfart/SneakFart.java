@@ -44,8 +44,4 @@ public final class SneakFart extends JavaPlugin {
         Metrics metrics = new Metrics(this, pluginId);
         metrics.addCustomChart(new SingleLineChart("fart_count", () -> fartCount));
     }
-
-    @Override
-    public void onDisable() {
-    }
 }
