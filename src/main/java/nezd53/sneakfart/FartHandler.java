@@ -16,6 +16,8 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.function.Predicate;
 
 import static java.lang.Math.*;
 import static nezd53.sneakfart.SneakFart.*;
@@ -75,23 +77,28 @@ public class FartHandler {
         NBTListCompound textures = skullOwner.addCompound("Properties").getCompoundList("textures").addCompound();
         textures.setString("Value", textureStr);
 
-        head = headNbt.getItem();
-
-        Zombie zombie = (Zombie) l.getWorld().spawnEntity(l, EntityType.ZOMBIE);
-        zombie.setBaby();
-        zombie.getEquipment().setHelmet(head);
-        zombie.setInvisible(true);
-        zombie.setSilent(true);
-        zombie.setHealth(1);
-        zombie.setLootTable(LootTables.EMPTY.getLootTable());
-        zombie.setInvisible(true);
-        zombie.setCustomName("Deadly Poop");
+        Optional.ofNullable(l.getWorld())
+                .ifPresent(world -> {
+                    Zombie zombie = (Zombie) world.spawnEntity(l, EntityType.ZOMBIE);
+                    zombie.setBaby();
+                    Optional.ofNullable(zombie.getEquipment())
+                            .ifPresent(equipment -> equipment.setHelmet(headNbt.getItem()));
+                    zombie.setInvisible(true);
+                    zombie.setSilent(true);
+                    zombie.setHealth(1);
+                    zombie.setLootTable(LootTables.EMPTY.getLootTable());
+                    zombie.setInvisible(true);
+                    zombie.setCustomName("Deadly Poop");
+                });
     }
 
     private static void inflictNausea(Location l, Player player) {
-        List<Player> players = l.getWorld().getPlayers();
-        for (Player p : players)
-            if (p.getLocation().distance(l) <= nauseaDistance && !player.equals(p))
-                p.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 5 * 20, 5));
+        Optional.ofNullable(l.getWorld())
+                .stream()
+                .map(World::getPlayers)
+                .flatMap(List::stream)
+                .filter(p -> p.getLocation().distance(l) <= nauseaDistance)
+                .filter(Predicate.not(player::equals))
+                .forEach(p -> p.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 5 * 20, 5)));
     }
 }
