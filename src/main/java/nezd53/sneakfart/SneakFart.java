@@ -4,6 +4,8 @@ import org.bstats.bukkit.Metrics;
 import org.bstats.charts.SingleLineChart;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.Optional;
+
 public final class SneakFart extends JavaPlugin {
 
     static boolean sneakFarts, fartCommand;
@@ -35,7 +37,8 @@ public final class SneakFart extends JavaPlugin {
             getServer().getPluginManager().registerEvents(new FartListener(), this);
 
         if (fartCommand)
-            this.getCommand("fart").setExecutor(new FartCommandExecutor());
+            Optional.ofNullable(this.getCommand("fart"))
+                    .ifPresent(pluginCommand -> pluginCommand.setExecutor(new FartCommandExecutor()));
 
         fartCount = 0;
 
