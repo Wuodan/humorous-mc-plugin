@@ -45,7 +45,7 @@ public class FartHandler {
             poop(player, offset, l);
 
         if (random() < deadlyPoopChance)
-            deadlyPoop(player, l);
+            deadlyPoop(l);
 
         if (random() < nauseaChance)
             inflictNausea(l, player);
@@ -62,7 +62,7 @@ public class FartHandler {
         item.setVelocity(offset.clone().divide(new Vector(10, 1, 10)));
     }
 
-    private static void deadlyPoop(Player player, Location l) {
+    private static void deadlyPoop(Location l) {
         String textureStr = "e3RleHR1cmVzOntTS0lOOnt1cmw6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYWFhMDU5OTBkNjMzYzhmYjFhYWVmYTM1YzcwYzViMWU0YWFiODE2YWI1MmI4YzAyZDU0MzY4ODdhNjI3YTI0MCJ9fX0=";
         ItemStack head = new ItemStack(Material.PLAYER_HEAD, 1);
         NBTItem headNbt = new NBTItem(head);
