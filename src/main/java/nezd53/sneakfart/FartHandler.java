@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Zombie;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.loot.LootTables;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
@@ -20,6 +21,17 @@ import static java.lang.Math.*;
 import static nezd53.sneakfart.SneakFart.*;
 
 public class FartHandler {
+    static void handleSneak(Player player) {
+        int startingTick = player.getStatistic(Statistic.SNEAK_TIME);
+        int endTick = startingTick + (int) (random() * (fartTimeEnd - fartTimeStart) + fartTimeStart) * 20;
+
+        player.getServer().getScheduler().scheduleSyncDelayedTask(JavaPlugin.getProvidingPlugin(SneakFart.class), () -> {
+            if (player.getStatistic(Statistic.SNEAK_TIME) >= endTick)
+                fart(player);
+        }, endTick - startingTick + 5);
+
+    }
+
     static void fart(Player player) {
         Particle.DustOptions options = new Particle.DustOptions(Color.fromRGB(139, 69, 19), (float) fartParticleSize);
         float yaw = player.getLocation().getYaw();
