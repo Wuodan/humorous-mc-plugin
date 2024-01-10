@@ -4,8 +4,6 @@ import org.bstats.bukkit.Metrics;
 import org.bstats.charts.SingleLineChart;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.concurrent.Callable;
-
 public final class SneakFart extends JavaPlugin {
 
     static boolean sneakFarts, fartCommand;
@@ -44,12 +42,7 @@ public final class SneakFart extends JavaPlugin {
         // bStats integration
         int pluginId = 12663; // <-- Replace with the id of your plugin!
         Metrics metrics = new Metrics(this, pluginId);
-        metrics.addCustomChart(new SingleLineChart("fart_count", new Callable<Integer>() {
-            @Override
-            public Integer call() throws Exception {
-                return fartCount;
-            }
-        }));
+        metrics.addCustomChart(new SingleLineChart("fart_count", () -> fartCount));
     }
 
     @Override
