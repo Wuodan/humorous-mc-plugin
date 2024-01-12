@@ -58,6 +58,11 @@
                         <goals>
                             <goal>shade</goal>
                         </goals>
+                        <!--
+                        <configuration>
+                            <outputDirectory>target/plugins</outputDirectory>
+                        </configuration>
+                        -->
                     </execution>
                 </executions>
             </plugin>

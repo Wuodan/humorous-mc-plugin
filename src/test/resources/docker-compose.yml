@@ -1,0 +1,17 @@
+version: "3.8"
+name: spigot-debug
+services:
+  spigot:
+    image: itzg/minecraft-server
+    environment:
+      - EULA=TRUE
+      - ENV TYPE=SPIGOT
+    ports:
+      - target: 25565
+        published: 25565
+        protocol: tcp
+        mode: host
+    volumes:
+      - type: bind
+        source: ../../../target/plugins
+        target: /data/plugins

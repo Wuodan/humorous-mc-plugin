@@ -17,6 +17,7 @@ public final class SneakFart extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        getLogger().info("Enabling SneakFart");
         saveDefaultConfig();
         sneakFarts = getConfig().getBoolean("EnableFarts", true);
         fartCommand = getConfig().getBoolean("FartCommand", true);
@@ -37,7 +38,7 @@ public final class SneakFart extends JavaPlugin {
             getServer().getPluginManager().registerEvents(new FartListener(), this);
 
         if (fartCommand)
-            Optional.ofNullable(this.getCommand("fart"))
+            Optional.ofNullable(getCommand("fart"))
                     .ifPresent(pluginCommand -> pluginCommand.setExecutor(new FartCommandExecutor()));
 
         fartCount = 0;
