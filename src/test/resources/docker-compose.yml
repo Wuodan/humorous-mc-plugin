@@ -13,5 +13,5 @@ services:
         mode: host
     volumes:
       - type: bind
-        source: ../../../target/plugins
-        target: /data/plugins
+        source: ../../../temp_plugins
+        target: /plugins
