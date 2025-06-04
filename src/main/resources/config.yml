@@ -42,5 +42,22 @@ FartParticleCount: 25
 # Size of fart particles
 FartParticleSize: 1
 
-# Volume level of fart sound
+# Name of default fart sound
+FartSoundName: "minecraft:block.wet_grass.place"
+
+# Volume level of default fart sound
 FartVolume: 1
+
+# Pitch of default fart sound
+FartPitch: 0.005
+
+# Name of custom fart sound from resource-pack.
+# Can also be set as environment variable
+# Use value "farts.fart-custom" for the provided resource pack
+FART_SOUND_NAME: null
+
+# Volume level of custom fart sound from resource-pack
+FartVolumeCustom: 1
+
+# Pitch of custom fart sound from resource-pack
+FartPitchCustom: 1

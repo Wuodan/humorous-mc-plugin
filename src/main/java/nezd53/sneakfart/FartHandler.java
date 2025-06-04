@@ -1,6 +1,12 @@
 package nezd53.sneakfart;
 
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.Color;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.Particle;
+import org.bukkit.SoundCategory;
+import org.bukkit.World;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
@@ -22,8 +28,24 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Predicate;
 
-import static java.lang.Math.*;
-import static nezd53.sneakfart.SneakFart.*;
+import static java.lang.Math.cos;
+import static java.lang.Math.random;
+import static java.lang.Math.sin;
+import static java.lang.Math.toRadians;
+import static nezd53.sneakfart.SneakFart.deadlyPoopChance;
+import static nezd53.sneakfart.SneakFart.fartDistance;
+import static nezd53.sneakfart.SneakFart.fartOffset;
+import static nezd53.sneakfart.SneakFart.fartParticleSize;
+import static nezd53.sneakfart.SneakFart.fartPitch;
+import static nezd53.sneakfart.SneakFart.fartPitchCustom;
+import static nezd53.sneakfart.SneakFart.fartSoundName;
+import static nezd53.sneakfart.SneakFart.fartSoundNameCustom;
+import static nezd53.sneakfart.SneakFart.fartVolume;
+import static nezd53.sneakfart.SneakFart.fartVolumeCustom;
+import static nezd53.sneakfart.SneakFart.nauseaChance;
+import static nezd53.sneakfart.SneakFart.nauseaDistance;
+import static nezd53.sneakfart.SneakFart.poopChance;
+import static nezd53.sneakfart.SneakFart.poopName;
 
 public class FartHandler {
     static void fart(Player player) {
@@ -33,7 +55,7 @@ public class FartHandler {
         Location l = player.getLocation().add(offset);
         player.getWorld().spawnParticle(Particle.REDSTONE, l,
                 25, fartOffset, fartOffset, fartOffset, options);
-        player.playSound(l, Sound.BLOCK_WET_GRASS_PLACE, (float) fartVolume, 0.005f);
+        playFartSound(player, l);
 
         if (random() < poopChance)
             poop(player, offset, l);
@@ -45,6 +67,16 @@ public class FartHandler {
             inflictNausea(l, player);
 
         SneakFart.fartCount++;
+    }
+
+    private static void playFartSound(Player player, Location l) {
+        if (fartSoundNameCustom != null && ResourcePackListener.hasResourcePack(player.getUniqueId())) {
+            // use custom sound from resource pack
+            player.playSound(l, fartSoundNameCustom, SoundCategory.PLAYERS, (float) fartVolumeCustom, (float) fartPitchCustom);
+        } else {
+            // play default sound
+            player.playSound(l, fartSoundName, (float) fartVolume, (float) fartPitch);
+        }
     }
 
     private static void poop(Player player, Vector offset, Location l) {

@@ -2,8 +2,8 @@ package nezd53.sneakfart;
 
 import org.bstats.bukkit.Metrics;
 import org.bstats.charts.SingleLineChart;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.HandlerList;
-import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Optional;
@@ -12,28 +12,17 @@ public final class SneakFart extends JavaPlugin {
 
     static boolean sneakFarts, fartCommand;
     static double fartDistance, fartTimeStart, fartTimeEnd,
-            fartOffset, fartParticleSize, fartVolume, poopChance, deadlyPoopChance, nauseaChance, nauseaDistance;
+            fartOffset, fartParticleSize, fartVolume, fartPitch, fartVolumeCustom, fartPitchCustom, poopChance, deadlyPoopChance, nauseaChance, nauseaDistance;
     static int fartParticleCount;
-    static String poopName;
+    static String fartSoundName, fartSoundNameCustom, poopName;
     static int fartCount;
+    static ResourcePackListener resourcePackListener = new ResourcePackListener();
 
     @Override
     public void onEnable() {
-        saveDefaultConfig();
-        sneakFarts = getConfig().getBoolean("EnableFarts", true);
-        fartCommand = getConfig().getBoolean("FartCommand", true);
-        fartDistance = getConfig().getDouble("FartDistance", 0.8);
-        fartTimeStart = getConfig().getDouble("FartTimeStart", 10);
-        fartTimeEnd = getConfig().getDouble("FartTimeEnd", 60);
-        fartOffset = getConfig().getDouble("FartOffset", 0.25);
-        fartParticleCount = getConfig().getInt("FartParticleCount", 25);
-        fartParticleSize = getConfig().getDouble("FartParticleSize", 1);
-        fartVolume = getConfig().getDouble("FartVolume", 1);
-        poopChance = getConfig().getDouble("PoopChance", 0.1);
-        deadlyPoopChance = getConfig().getDouble("DeadlyPoopChance", 0.05);
-        poopName = getConfig().getString("PoopName", "Poop");
-        nauseaChance = getConfig().getDouble("NauseaChance", 1);
-        nauseaDistance = getConfig().getDouble("NauseaDistance", 3);
+        loadConfig();
+
+        getServer().getPluginManager().registerEvents(resourcePackListener, this);
 
         if (sneakFarts)
             getServer().getPluginManager().registerEvents(new FartListener(), this);
@@ -48,6 +37,32 @@ public final class SneakFart extends JavaPlugin {
         int pluginId = 12663; // <-- Replace with the id of your plugin!
         Metrics metrics = new Metrics(this, pluginId);
         metrics.addCustomChart(new SingleLineChart("fart_count", () -> fartCount));
+    }
+
+    private void loadConfig() {
+        saveDefaultConfig();
+        FileConfiguration config = getConfig();
+        sneakFarts = config.getBoolean("EnableFarts", true);
+        fartCommand = config.getBoolean("FartCommand", true);
+        fartDistance = config.getDouble("FartDistance", 0.8);
+        fartTimeStart = config.getDouble("FartTimeStart", 10);
+        fartTimeEnd = config.getDouble("FartTimeEnd", 60);
+        fartOffset = config.getDouble("FartOffset", 0.25);
+        fartParticleCount = config.getInt("FartParticleCount", 25);
+        fartParticleSize = config.getDouble("FartParticleSize", 1);
+        fartSoundName = config.getString("FartSoundName", "minecraft:block.wet_grass.place");
+        fartVolume = config.getDouble("FartVolume", 1);
+        fartPitch = config.getDouble("FartPitch", 1);
+        fartVolumeCustom = config.getDouble("FartVolumeCustom", 1);
+        fartPitchCustom = config.getDouble("FartPitchCustom", 1);
+        poopChance = config.getDouble("PoopChance", 0.1);
+        deadlyPoopChance = config.getDouble("DeadlyPoopChance", 0.05);
+        poopName = config.getString("PoopName", "Poop");
+        nauseaChance = config.getDouble("NauseaChance", 1);
+        nauseaDistance = config.getDouble("NauseaDistance", 3);
+        // load from environment variable or config
+        fartSoundNameCustom = Optional.ofNullable(System.getenv("FART_SOUND_NAME"))
+            .orElse(config.getString("FART_SOUND_NAME", null));
     }
 
     @Override
