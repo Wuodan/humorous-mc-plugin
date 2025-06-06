@@ -1,0 +1,38 @@
+name: Build release assets
+
+on:
+  release:
+    types: [ created ]
+
+env:
+  TAG: ${{ github.event.release.tag_name }}
+
+jobs:
+
+  build-resource-pack:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Zip resource pack
+        run: |
+          cd resource-pack/fartpack
+          # recursively set all timestamps to 1970 for deterministic zip (same SHA1)
+          find * | xargs touch -d '1970-01-01T00:00:00Z'
+          # zip -X removes extra file attributes
+          zip -X -r ../../fartpack-${TAG}.zip ./*
+
+      - name: Create SHA1 checksum file
+        run: sha1sum fartpack-${TAG}.zip > fartpack-${TAG}.zip.sha1.txt
+
+      - name: Upload resource pack to release
+        if: github.actor != 'nektos/act'  # skip locally in `act` (https://nektosact.com/)
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            fartpack-*.zip
+            fartpack-*.zip.sha1.txt
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
