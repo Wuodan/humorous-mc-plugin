@@ -15,14 +15,14 @@ services:
 
       # Add SneakFart as plugin
       PLUGINS: |
-        https://github.com/mfletcher2/humorous-mc-plugin/releases/download/<version>/sneakfart-<version>.jar
+        https://github.com/Wuodan/humorous-mc-plugin/releases/download/<version>/sneakfart-<version>.jar
 
       #=====================================#
       # SNEAKFART: (OPTIONAL) RESOURCE PACK #
       #=====================================#
 
       # resource pack for custom sounds
-      RESOURCE_PACK: "https://github.com/mfletcher2/humorous-mc-plugin/releases/download/<version>/fartpack-<version>.zip"
+      RESOURCE_PACK: "https://github.com/Wuodan/humorous-mc-plugin/releases/download/<version>/fartpack-<version>.zip"
       # SHA1 checksum from fartpack-*.zip.sha1.txt in the release
       RESOURCE_PACK_SHA1: "<sha1 of fartpack-*.zip>"
       # Custom fart name for resource pack

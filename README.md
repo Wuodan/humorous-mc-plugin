@@ -17,25 +17,25 @@
 
 ## 🧩 Plugin Installation
 
-💾 Place the [sneakfart-\<version\>.jar file](https://github.com/mfletcher2/humorous-mc-plugin/releases/latest/) in the `plugins` folder.
+💾 Place the [sneakfart-\<version\>.jar file](https://github.com/Wuodan/humorous-mc-plugin/releases/latest/) in the `plugins` folder.
 
 ---
 
 ## 🎵 Optional: Fart Sound Resource Pack
 
-For a realistic [fart sound](https://raw.githubusercontent.com/mfletcher2/humorous-mc-plugin/main/resource-pack/fartpack/assets/minecraft/sounds/farts/fart-83471.ogg), use the optional resource pack.
+For a realistic [fart sound](https://raw.githubusercontent.com/Wuodan/humorous-mc-plugin/main/resource-pack/fartpack/assets/minecraft/sounds/farts/fart-83471.ogg), use the optional resource pack.
 
 ### 🛠️️ Server Properties
 
 Change these values in your `server.properties` file to:
 ```properties
-resource-pack=https://github.com/mfletcher2/humorous-mc-plugin/releases/download/<version>/fartpack-<version>.zip
+resource-pack=https://github.com/Wuodan/humorous-mc-plugin/releases/download/<version>/fartpack-<version>.zip
 resource-pack-prompt="Do you want to install custom fart sounds?"
 resource-pack-sha1=<sha1 of fartpack-*.zip>
 ```
 
 - Replace \<version\> in `resource-pack`
-- `resource-pack-sha1` is in  [fartpack-\<version\>.zip.sha1.txt](https://github.com/mfletcher2/humorous-mc-plugin/releases/latest/)
+- `resource-pack-sha1` is in  [fartpack-\<version\>.zip.sha1.txt](https://github.com/Wuodan/humorous-mc-plugin/releases/latest/)
 
 ### ⚙ Plugin config
 
