@@ -1,0 +1,51 @@
+name: Build release JAR
+
+on:
+  release:
+    types: [ created ]
+
+env:
+  TAG: ${{ github.event.release.tag_name }}
+
+jobs:
+
+  build-release-jar:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Update project version in plugin.yml
+        run: |
+          echo "Setting project version in plugin.yml to $TAG"
+          sed -Ei "s#^version: .*\$#version: ${TAG}#" src/main/resources/plugin.yml
+          echo "Updated plugin.yml is:"
+          cat src/main/resources/plugin.yml
+
+      - name: Update project version
+        run: |
+          echo "Setting project version in pom.xml to $TAG"
+          mvn --batch-mode versions:set -DnewVersion="$TAG"
+          mvn --batch-mode versions:commit
+
+      - name: Build jar file
+        run: |
+          echo "Build JAR file"
+          mvn --batch-mode package
+
+      - name: Upload jar file to release
+        if: github.actor != 'nektos/act'  # skip locally in `act` (https://nektosact.com/)
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            target/sneakfart-*.jar
+            !target/original-*.jar
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
