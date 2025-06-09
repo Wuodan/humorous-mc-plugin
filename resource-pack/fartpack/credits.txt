@@ -1,0 +1,9 @@
+# Sound file
+
+assets/minecraft/sounds/farts/fart-83471.ogg:
+    https://pixabay.com/sound-effects/fart-83471/
+	Author: MacKaffee
+	License: Pixabay Content License
+
+Conversion to ogg
+	ffmpeg -i file.mp3 -c:a libvorbis -q:a 3 file.ogg

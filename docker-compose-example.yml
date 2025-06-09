@@ -1,0 +1,56 @@
+name: "minecraft-server"
+services:
+  minecraft-server:
+    image: itzg/minecraft-server:latest
+    container_name: minecraft-paper
+    ports:
+      - "25565:25565"  # Minecraft server port
+      # Java debug port for remote-debugging
+      # - "5005:5005"
+    environment:
+
+      ########################
+      ### SNEAKFART: START ###
+      ########################
+
+      # Add SneakFart as plugin
+      PLUGINS: |
+        https://github.com/mfletcher2/humorous-mc-plugin/releases/download/<version>/sneakfart-<version>.jar
+
+      #=====================================#
+      # SNEAKFART: (OPTIONAL) RESOURCE PACK #
+      #=====================================#
+
+      # resource pack for custom sounds
+      RESOURCE_PACK: "https://github.com/mfletcher2/humorous-mc-plugin/releases/download/<version>/fartpack-<version>.zip"
+      # SHA1 checksum from fartpack-*.zip.sha1.txt in the release
+      RESOURCE_PACK_SHA1: "<sha1 of fartpack-*.zip>"
+      # Custom fart name for resource pack
+      FART_SOUND_NAME: "farts.fart-custom"
+
+      # Prompt for players
+      RESOURCE_PACK_PROMPT: '{"text":"Do you want to install custom fart sounds?"}'
+      # resource pack id (or Paper will use default)
+      RESOURCE_PACK_ID: "001c1a9e-5b85-4e0b-a141-9f44a7d945d7"
+
+      #######################
+      ### SNEAKFART: END ###
+      #######################
+
+      # Minecraft version
+      VERSION: "1.21.4"
+      EULA: "TRUE"
+      TYPE: "PAPER"
+      INIT_MEMORY: "2G"
+      MAX_MEMORY: "16G"
+      # SEED to spawn at a village (from https://beebom.com/best-minecraft-seeds/ -> 2. Three Villages and a Cherry Grove)
+      SEED: "5348024562502568"
+      SPAWN: "-34,122,-26"
+      # Java options for remote debugging
+      # JAVA_TOOL_OPTIONS: "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005"
+    volumes:
+      # Bind mount to persist data on disk
+      - ./data:/data
+      # to overwrite the config of SneakFart, use
+      # - ./SneakFart-config.yml:/data/plugins/SneakFart/config.yml:ro
+    restart: unless-stopped

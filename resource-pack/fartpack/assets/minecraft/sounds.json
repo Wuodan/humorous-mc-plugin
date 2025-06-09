@@ -1,0 +1,6 @@
+{
+  "farts.fart-custom": {
+    "category": "player",
+    "sounds": [ "farts/fart-83471"]
+  }
+}

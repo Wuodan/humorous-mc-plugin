@@ -7,11 +7,13 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import static java.lang.Math.random;
+import java.util.Random;
+
 import static nezd53.sneakfart.SneakFart.fartTimeEnd;
 import static nezd53.sneakfart.SneakFart.fartTimeStart;
 
 public class FartListener implements Listener {
+    private final Random random = new Random();
 
     @EventHandler
     public void onSneak(PlayerToggleSneakEvent event) {
@@ -19,14 +21,14 @@ public class FartListener implements Listener {
             handleSneak(event.getPlayer());
     }
 
-    private static void handleSneak(Player player) {
+    private void handleSneak(Player player) {
         int startingTick = player.getStatistic(Statistic.SNEAK_TIME);
-        int endTick = startingTick + (int) (random() * (fartTimeEnd - fartTimeStart) + fartTimeStart) * 20;
+        int endTick = startingTick + (int) (random.nextInt() * (fartTimeEnd - fartTimeStart) + fartTimeStart) * 20;
 
         player.getServer().getScheduler().scheduleSyncDelayedTask(JavaPlugin.getProvidingPlugin(SneakFart.class), () -> {
             if (player.getStatistic(Statistic.SNEAK_TIME) >= endTick)
                 FartHandler.fart(player);
-        }, endTick - startingTick + 5);
+        }, endTick - startingTick + 5L);
 
     }
 }

@@ -8,11 +8,40 @@
 ![bStats Servers](https://img.shields.io/bstats/servers/12663?label=Online%20Servers)
 
 
+[Download on SpigotMC](https://www.spigotmc.org/resources/sneak-fart.86771/)
 
-[SpigotMC link](https://www.spigotmc.org/resources/sneak-fart.86771/)
+[Usage Statistics](https://bstats.org/plugin/bukkit/SneakFart/12663)
 
-it uses [Maven](https://maven.apache.org/) compile with `mvn package`
 
-made possible thanks to [NBT API](https://www.spigotmc.org/resources/nbt-api.7939/)
+# 🚀 SneakFart Plugin for Minecraft
 
-[Statistics](https://bstats.org/plugin/bukkit/SneakFart/12663)
+## 🧩 Plugin Installation
+
+💾 Place the [sneakfart-\<version\>.jar file](https://github.com/mfletcher2/humorous-mc-plugin/releases/latest/) in the `plugins` folder.
+
+---
+
+## 🎵 Optional: Fart Sound Resource Pack
+
+For a realistic [fart sound](https://raw.githubusercontent.com/mfletcher2/humorous-mc-plugin/main/resource-pack/fartpack/assets/minecraft/sounds/farts/fart-83471.ogg), use the optional resource pack.
+
+### 🛠️️ Server Properties
+
+Change these values in your `server.properties` file to:
+```properties
+resource-pack=https://github.com/mfletcher2/humorous-mc-plugin/releases/download/<version>/fartpack-<version>.zip
+resource-pack-prompt="Do you want to install custom fart sounds?"
+resource-pack-sha1=<sha1 of fartpack-*.zip>
+```
+
+- Replace \<version\> in `resource-pack`
+- `resource-pack-sha1` is in  [fartpack-\<version\>.zip.sha1.txt](https://github.com/mfletcher2/humorous-mc-plugin/releases/latest/)
+
+### ⚙ Plugin config
+
+Change this value in your `plugins/SneakFart/config.yml` file to:
+```yaml
+FART_SOUND_NAME: "farts.fart-custom"
+```
+
+---
